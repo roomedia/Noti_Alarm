@@ -1,4 +1,4 @@
-package com.roo_media_.noti_alarm
+package com.roo_media_.noti_alarm.ui.main
 
 import android.content.Context
 import android.content.Intent
@@ -9,7 +9,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.roo_media_.noti_alarm.ui.main.SectionsPagerAdapter
+import com.roo_media_.noti_alarm.R
 import kotlinx.android.synthetic.main.activity_grant.*
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -63,7 +63,9 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.appbar_actions, menu)
 
         val pref = getSharedPreferences("enabled", Context.MODE_PRIVATE)
-        val switch = menu?.findItem(R.id.alarmSwitch)?.actionView?.findViewById<Switch>(R.id.alarmSwitch)
+        val switch = menu?.findItem(R.id.alarmSwitch)?.actionView?.findViewById<Switch>(
+            R.id.alarmSwitch
+        )
 
         switch?.isChecked = pref.getBoolean("enabled", false)
         switch?.setOnClickListener {

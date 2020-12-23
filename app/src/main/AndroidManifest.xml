@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme"
         android:fullBackupContent="true">
         <activity
-            android:name="com.roo_media_.noti_alarm.MainActivity"
+            android:name="com.roo_media_.noti_alarm.ui.main.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

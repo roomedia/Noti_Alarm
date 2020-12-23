@@ -11,4 +11,8 @@
     <string name="grant_description">알림 접근 허용에서 권한을 허용해야 합니다!</string>
     <string name="grant_button_description">알림 접근 허용</string>
     <string name="icon_description">app icon</string>
+    <string name="alarm_description">%1$d번 눌러 알람 끄기</string>
+    <string name="dummy_notification_1">Dummy Notification Triggered\nSomething Went WRONG!!\nTake a Look at Server</string>
+    <string name="dummy_notification_2">Dummy Notification Triggered\nSomething Went WRONG!!\nTake a Look at Server\n\nCode: 0x001230123001510250130502356043670585058473046025032042036040753078405650</string>
+    <string name="dummy_notification_3">Dummy Notification Triggered\nSomething Went WRONG!!\nTake a Look at Server\n\nCode: 0x001230123001510250130502356043670585058473046025032042036040753078405650001230123001510250130502356043670585058473046025032042036040753078405650001230123001510250130502356043670585058473046025032042036040753078405650001230123001510250130502356043670585058473046025032042036040753078405650001230123001510250130502356043670585058473046025032042036040753078405650</string>
 </resources>

@@ -2,46 +2,31 @@ package com.roo_media_.noti_alarm
 
 import android.app.Notification
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
-import android.media.AudioManager
-import android.media.SoundPool
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import com.roo_media_.noti_alarm.model.AppDatabase
 import com.roo_media_.noti_alarm.model.KeywordDao
+import com.roo_media_.noti_alarm.ui.alarm.Alarm
+import com.roo_media_.noti_alarm.ui.alarm.AlarmActivity
 
 class NotificationAlarmListener: NotificationListenerService() {
-    // db
-    private lateinit var db: AppDatabase
-    private lateinit var keywordDao: KeywordDao
-
-    // sound
-    private lateinit var audioManager: AudioManager
-    private var soundPool = SoundPool.Builder().setMaxStreams(1).build()
-    private var streamID: Int? = null
-    private var volume = 0
-
-    // enabled
-    private lateinit var pref: SharedPreferences
-
-    override fun onListenerConnected() {
-        super.onListenerConnected()
-        db = AppDatabase.getAppDataBase(applicationContext)!!
-        keywordDao = db.keywordDao()
-        audioManager = applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        pref = getSharedPreferences("enabled", Context.MODE_PRIVATE)
+    private val keywordDao: KeywordDao by lazy {
+        AppDatabase.getAppDataBase(applicationContext)!!.keywordDao()
+    }
+    private val pref: SharedPreferences by lazy {
+        getSharedPreferences("enabled", Context.MODE_PRIVATE)
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
-        super.onNotificationPosted(sbn)
         if (!pref.getBoolean("enabled", false)) return
-        if (streamID != null) return
         sbn ?: return
 
         val text = sbn.notification.extras.run {
-            getString(Notification.EXTRA_TITLE) + " " +
-            getCharSequence(Notification.EXTRA_TEXT) + " " +
-            getCharSequence(Notification.EXTRA_SUB_TEXT)
+            (getString(Notification.EXTRA_TITLE) ?: "") + "\n" +
+            (getCharSequence(Notification.EXTRA_TEXT) ?: "") + "\n\n" +
+            (getCharSequence(Notification.EXTRA_SUB_TEXT) ?: "")
         }
 
         keywordDao.get(sbn.packageName).observeForever { keywords ->
@@ -53,28 +38,13 @@ class NotificationAlarmListener: NotificationListenerService() {
             if (!keywords.fold(false) { acc, ele -> acc || text.contains(ele.keyword) })
                 return@observeForever
 
-            streamID = soundPool.load(applicationContext, R.raw.alarm, 1)
-            soundPool.setOnLoadCompleteListener { soundPool, sampleId, _ ->
-                volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
-                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 15, AudioManager.FLAG_SHOW_UI)
-                soundPool.play(sampleId, 1f, 1f, 1, -1, 1f)
-            }
-        }
-    }
-
-    override fun onNotificationRemoved(sbn: StatusBarNotification?) {
-        super.onNotificationRemoved(sbn)
-        streamID ?: return
-        sbn ?: return
-
-        keywordDao.get(sbn.packageName).observeForever { keywords ->
-            // if not a registered app
-            if (keywords.isEmpty())
-                return@observeForever
-
-            soundPool.stop(streamID!!)
-            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, AudioManager.FLAG_SHOW_UI)
-            streamID = null
+            val intent = Intent(applicationContext, AlarmActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                .putExtra("packageName", sbn.packageName)
+                .putExtra("name", keywords[0].name)
+                .putExtra("notification", text)
+            startActivity(intent)
         }
     }
 }

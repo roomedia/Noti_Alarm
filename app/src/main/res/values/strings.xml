@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">알림 알람</string>
+    <string name="tab_text_1">알람 추가</string>
+    <string name="tab_text_2">알람 편집</string>
+    <string name="add">추가</string>
+    <string name="delete">삭제</string>
+    <string name="hint">알람 키워드 입력</string>
+    <string name="request">키워드를 입력하세요!</string>
+
+    <string name="switch_description">알람 스위치</string>
+    <string name="grant_description">알림 접근 허용에서 권한을 허용해야 합니다!</string>
+    <string name="grant_button_description">알림 접근 허용</string>
+    <string name="icon_description">app icon</string>
+</resources>

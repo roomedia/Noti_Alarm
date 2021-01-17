@@ -24,7 +24,8 @@ class Alarm(private val context: Context) {
 
         // save current volume and maximize it
         volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
-        val index = if (BuildConfig.DEBUG) 1 else 15
+//        val index = if (BuildConfig.DEBUG) 1 else 15
+        val index = 15
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, index, AudioManager.FLAG_SHOW_UI)
 
         // load and infinite play

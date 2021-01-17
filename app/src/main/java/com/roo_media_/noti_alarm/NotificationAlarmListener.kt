@@ -6,10 +6,13 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
+import android.util.Log
+import androidx.lifecycle.Observer
 import com.roo_media_.noti_alarm.model.AppDatabase
+import com.roo_media_.noti_alarm.model.Keyword
 import com.roo_media_.noti_alarm.model.KeywordDao
-import com.roo_media_.noti_alarm.ui.alarm.Alarm
 import com.roo_media_.noti_alarm.ui.alarm.AlarmActivity
+import java.util.*
 
 class NotificationAlarmListener: NotificationListenerService() {
     private val keywordDao: KeywordDao by lazy {
@@ -29,22 +32,33 @@ class NotificationAlarmListener: NotificationListenerService() {
             (getCharSequence(Notification.EXTRA_SUB_TEXT) ?: "")
         }
 
-        keywordDao.get(sbn.packageName).observeForever { keywords ->
-            // if not a registered app
-            if (keywords.isEmpty())
-                return@observeForever
-
-            // if no keyword contained
-            if (!keywords.fold(false) { acc, ele -> acc || text.contains(ele.keyword) })
-                return@observeForever
-
-            val intent = Intent(applicationContext, AlarmActivity::class.java)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                .putExtra("packageName", sbn.packageName)
-                .putExtra("name", keywords[0].name)
-                .putExtra("notification", text)
-            startActivity(intent)
+        var isFirst = true
+        val alarmObserver = Observer<List<Keyword>> { keywords ->
+            if (isFirst) {
+                alarm(sbn.packageName, text.toLowerCase(Locale.getDefault()), keywords)
+                isFirst = false
+            }
         }
+        keywordDao.get(sbn.packageName).observeForever(alarmObserver)
+    }
+
+    private fun alarm(packageName: String, text: String, keywords: List<Keyword>) {
+
+        // if not a registered app
+        if (keywords.isEmpty())
+            return
+
+        // if no keyword contained
+        if (!keywords.fold(false) { acc, ele ->
+                acc || text.contains(ele.keyword.toLowerCase(Locale.getDefault())) })
+            return
+
+        val intent = Intent(applicationContext, AlarmActivity::class.java)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            .putExtra("packageName", packageName)
+            .putExtra("name", keywords[0].name)
+            .putExtra("notification", text)
+        startActivity(intent)
     }
 }

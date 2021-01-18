@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Dawn Down Alarm</string>
-    <string name="tab_text_1">Add Alarm</string>
-    <string name="tab_text_2">Edit Alarm</string>
-    <string name="add">Add</string>
-    <string name="delete">Delete</string>
-    <string name="hint">Input Alarm Keyword</string>
-    <string name="request">Please Input Alarm Keyword!</string>
+    <string name="app_name">새벽다운 알람</string>
+    <string name="tab_text_1">알람 추가</string>
+    <string name="tab_text_2">알람 편집</string>
+    <string name="add">추가</string>
+    <string name="delete">삭제</string>
+    <string name="hint">알람 키워드 입력</string>
+    <string name="request">키워드를 입력하세요!</string>
 
-    <string name="switch_description">Alarm Switch</string>
-    <string name="grant_description">Please grant <b>Notification Access</b> permission \non <b>Dawn Down Alarm!</b></string>
-    <string name="grant_button_description">Grant Permission</string>
-    <string name="icon_description">app icon</string>
-    <string name="alarm_description">PUSH <b>%1$d TIMES</b> TO KILL ALARM</string>
+    <string name="switch_description">알람 스위치</string>
+    <string name="grant_description"><b>새벽다운 알람</b>의 \n<b>알림 접근 권한</b>을 허용해주세요!</string>
+    <string name="grant_button_description">권한 허용</string>
+    <string name="icon_description">앱 아이콘</string>
+    <string name="alarm_description">%1$d번 눌러 알람 끄기</string>
     <string name="dummy_notification_1">Dummy Notification Triggered\nSomething Went WRONG!!\nTake a Look at Server</string>
     <string name="dummy_notification_2">Dummy Notification Triggered\nSomething Went WRONG!!\nTake a Look at Server\n\nCode: 0x001230123001510250130502356043670585058473046025032042036040753078405650</string>
     <string name="dummy_notification_3">Dummy Notification Triggered\nSomething Went WRONG!!\nTake a Look at Server\n\nCode: 0x001230123001510250130502356043670585058473046025032042036040753078405650001230123001510250130502356043670585058473046025032042036040753078405650001230123001510250130502356043670585058473046025032042036040753078405650001230123001510250130502356043670585058473046025032042036040753078405650001230123001510250130502356043670585058473046025032042036040753078405650</string>

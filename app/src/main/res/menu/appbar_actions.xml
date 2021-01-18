@@ -3,6 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/alarmSwitch"
+        android:contentDescription="@string/switch_description"
+        android:text="@string/switch_description"
         android:title="@string/switch_description"
         app:actionLayout="@layout/switch_item"
         app:showAsAction="always" />

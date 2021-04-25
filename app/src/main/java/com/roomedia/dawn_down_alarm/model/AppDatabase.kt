@@ -10,7 +10,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun keywordDao(): KeywordDao
 
     companion object {
-        var INSTANCE: AppDatabase? = null
+        private var INSTANCE: AppDatabase? = null
 
         fun getAppDataBase(context: Context): AppDatabase? {
             if (INSTANCE == null){
@@ -19,10 +19,6 @@ abstract class AppDatabase : RoomDatabase() {
                 }
             }
             return INSTANCE
-        }
-
-        fun destroyDataBase(){
-            INSTANCE = null
         }
     }
 }

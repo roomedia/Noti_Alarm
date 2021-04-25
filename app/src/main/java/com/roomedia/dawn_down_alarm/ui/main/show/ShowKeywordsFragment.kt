@@ -5,7 +5,6 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.roomedia.dawn_down_alarm.R
 import com.roomedia.dawn_down_alarm.ui.main.KeywordViewModel
 import kotlinx.android.synthetic.main.fragment_show.*

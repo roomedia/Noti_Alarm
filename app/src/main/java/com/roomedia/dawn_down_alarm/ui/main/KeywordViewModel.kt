@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.roomedia.dawn_down_alarm.model.AppDatabase
 import com.roomedia.dawn_down_alarm.model.Keyword
-import com.roomedia.dawn_down_alarm.model.KeywordDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Job
@@ -20,12 +19,6 @@ class KeywordViewModel(application: Application) : AndroidViewModel(application)
     fun insert(keyword: Keyword) {
         viewModelScope.launch {
             keywordDao.insert(keyword)
-        }
-    }
-
-    fun update(keyword: Keyword) {
-        viewModelScope.launch {
-            keywordDao.update(keyword)
         }
     }
 

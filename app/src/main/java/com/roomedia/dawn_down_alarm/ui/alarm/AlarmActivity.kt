@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.roomedia.dawn_down_alarm.R
 import kotlinx.android.synthetic.main.activity_alarm.*
 
+@Suppress("DEPRECATION")
 class AlarmActivity : AppCompatActivity() {
 
     private var count = 5

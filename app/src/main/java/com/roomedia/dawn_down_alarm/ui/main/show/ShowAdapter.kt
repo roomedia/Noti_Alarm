@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.roomedia.dawn_down_alarm.R
 import com.roomedia.dawn_down_alarm.model.Keyword
-import com.roomedia.dawn_down_alarm.ui.main.KeywordViewModel
 import kotlinx.android.synthetic.main.recycler_show_item.view.*
 
 class ShowAdapter(private val deleteCallback: (Keyword) -> Unit) :

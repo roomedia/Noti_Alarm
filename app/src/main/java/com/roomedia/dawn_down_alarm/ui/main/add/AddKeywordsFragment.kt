@@ -3,7 +3,6 @@ package com.roomedia.dawn_down_alarm.ui.main.add
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.content.res.Configuration
 import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.os.Bundle
 import android.view.*
@@ -75,10 +74,8 @@ class AddKeywordsFragment : Fragment() {
         val mainIntent = Intent(Intent.ACTION_MAIN, null)
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER)
 
-        return context.packageManager
-            .queryIntentActivities(mainIntent, 0)
-            .map {
-                it.activityInfo
-            }
+        return context.packageManager.queryIntentActivities(mainIntent, 0)
+            .map { it.activityInfo }
+            .sortedBy { it.applicationInfo.loadLabel(context.packageManager).toString() }
     }
 }

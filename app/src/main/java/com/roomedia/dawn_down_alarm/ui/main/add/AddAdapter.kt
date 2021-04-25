@@ -23,30 +23,31 @@ class AddAdapter(private val dataset: List<ActivityInfo>):
     }
 
     override fun onBindViewHolder(holder: AppViewHolder, position: Int) {
-        var name: CharSequence
-        var packageName: String
+        val name: CharSequence
+        val packageName: String
 
-        val it = holder.view
-        it.context.packageManager.apply {
-            packageName = dataset[position].packageName
-            name = getApplicationLabel(dataset[position].applicationInfo)
-        }.run {
-            it.iconImageView.setImageDrawable(getApplicationIcon(packageName))
-            it.nameTextView.text = name
-        }
+        with (holder.view) {
+            context.packageManager.apply {
+                packageName = dataset[position].packageName
+                name = getApplicationLabel(dataset[position].applicationInfo)
+            }.run {
+                iconImageView.setImageDrawable(getApplicationIcon(packageName))
+                nameTextView.text = name
+            }
 
-        if (selectedPosition == position) {
-            it.setBackgroundResource(R.color.colorPrimaryDark)
-            it.nameTextView.setTextColor(Color.rgb(230, 230, 230))
-        } else {
-            it.setBackgroundResource(android.R.color.transparent)
-            it.nameTextView.setTextColor(Color.rgb(128, 128, 128))
-        }
+            if (selectedPosition == position) {
+                setBackgroundResource(R.color.colorPrimaryDark)
+                nameTextView.setTextColor(Color.rgb(230, 230, 230))
+            } else {
+                setBackgroundResource(android.R.color.transparent)
+                nameTextView.setTextColor(Color.rgb(128, 128, 128))
+            }
 
-        it.setOnClickListener {
-            selected = Pair(packageName, name.toString())
-            selectedPosition = position
-            notifyDataSetChanged()
+            setOnClickListener {
+                selected = Pair(packageName, name.toString())
+                selectedPosition = position
+                notifyDataSetChanged()
+            }
         }
     }
 

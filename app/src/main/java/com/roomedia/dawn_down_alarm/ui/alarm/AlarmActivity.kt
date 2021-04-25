@@ -12,9 +12,7 @@ import kotlinx.android.synthetic.main.activity_alarm.*
 class AlarmActivity : AppCompatActivity() {
 
     private var count = 5
-    private val alarm: Alarm by lazy {
-        Alarm(this)
-    }
+    private val alarm by lazy { AlarmAudioManager(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

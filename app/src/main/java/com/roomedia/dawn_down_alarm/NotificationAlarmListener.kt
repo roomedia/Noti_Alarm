@@ -3,29 +3,27 @@ package com.roomedia.dawn_down_alarm
 import android.app.Notification
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import androidx.lifecycle.Observer
 import com.roomedia.dawn_down_alarm.model.AppDatabase
 import com.roomedia.dawn_down_alarm.model.Keyword
-import com.roomedia.dawn_down_alarm.model.KeywordDao
 import com.roomedia.dawn_down_alarm.ui.alarm.AlarmActivity
 import java.util.*
 
 class NotificationAlarmListener: NotificationListenerService() {
-    private val keywordDao: KeywordDao by lazy {
+    private val keywordDao by lazy {
         AppDatabase.getAppDataBase(applicationContext)!!.keywordDao()
     }
-    private val pref: SharedPreferences by lazy {
+    private val preferences by lazy {
         getSharedPreferences("enabled", Context.MODE_PRIVATE)
     }
 
-    override fun onNotificationPosted(sbn: StatusBarNotification?) {
-        if (!pref.getBoolean("enabled", false)) return
-        sbn ?: return
+    override fun onNotificationPosted(statusBarNotification: StatusBarNotification?) {
+        if (!preferences.getBoolean("enabled", true)) return
+        statusBarNotification ?: return
 
-        val text = sbn.notification.extras.run {
+        val text = statusBarNotification.notification.extras.run {
             (getString(Notification.EXTRA_TITLE) ?: "") + "\n" +
             (getCharSequence(Notification.EXTRA_TEXT) ?: "") + "\n\n" +
             (getCharSequence(Notification.EXTRA_SUB_TEXT) ?: "")
@@ -34,23 +32,22 @@ class NotificationAlarmListener: NotificationListenerService() {
         var isFirst = true
         val alarmObserver = Observer<List<Keyword>> { keywords ->
             if (isFirst) {
-                alarm(sbn.packageName, text.toLowerCase(Locale.getDefault()), keywords)
+                runAlarm(statusBarNotification.packageName, text.toLowerCase(Locale.getDefault()), keywords)
                 isFirst = false
             }
         }
-        keywordDao.get(sbn.packageName).observeForever(alarmObserver)
+        keywordDao.get(statusBarNotification.packageName).observeForever(alarmObserver)
     }
 
-    private fun alarm(packageName: String, text: String, keywords: List<Keyword>) {
-
+    private fun runAlarm(packageName: String, text: String, keywords: List<Keyword>) {
         // if not a registered app
         if (keywords.isEmpty())
             return
 
         // if no keyword contained
-        if (!keywords.fold(false) { acc, ele ->
-                acc || text.contains(ele.keyword.toLowerCase(Locale.getDefault())) })
-            return
+        if (!keywords.fold(false) { acc, (keyword) ->
+                acc || text.contains(keyword.toLowerCase(Locale.getDefault()))
+            }) return
 
         val intent = Intent(applicationContext, AlarmActivity::class.java)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

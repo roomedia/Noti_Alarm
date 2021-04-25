@@ -12,11 +12,8 @@ import kotlinx.coroutines.launch
 
 class KeywordViewModel(application: Application) : AndroidViewModel(application) {
     private val db = AppDatabase.getAppDataBase(application.applicationContext)!!
-    private val keywordDao: KeywordDao by lazy {
-        db.keywordDao()
-    }
-    private val viewModelJob = Job()
-    private val viewModelScope = CoroutineScope(Default + viewModelJob)
+    private val keywordDao by lazy { db.keywordDao() }
+    private val viewModelScope = CoroutineScope(Default + Job())
 
     private val keywords: LiveData<List<Keyword>> = keywordDao.getAll()
 

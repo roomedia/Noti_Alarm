@@ -13,13 +13,14 @@
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:clipToPadding="false"
-        android:numColumns="4"
         android:padding="8dp"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/recycler_add_item" />
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:listitem="@layout/recycler_add_item"
+        tools:spanCount="4" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"

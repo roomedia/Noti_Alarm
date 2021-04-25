@@ -9,10 +9,16 @@ import com.roomedia.dawn_down_alarm.model.Keyword
 import com.roomedia.dawn_down_alarm.ui.main.KeywordViewModel
 import kotlinx.android.synthetic.main.recycler_show_item.view.*
 
-class ShowAdapter(private val dataset: List<Keyword>, private val keywordViewModel: KeywordViewModel):
+class ShowAdapter(private val deleteCallback: (Keyword) -> Unit) :
     RecyclerView.Adapter<ShowAdapter.KeywordViewHolder>() {
 
-    class KeywordViewHolder(val view: View): RecyclerView.ViewHolder(view)
+    private val dataset: MutableList<Keyword> = mutableListOf()
+
+    fun updateDataset(keywords: List<Keyword>) {
+        dataset.clear()
+        dataset.addAll(keywords)
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KeywordViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -21,17 +27,20 @@ class ShowAdapter(private val dataset: List<Keyword>, private val keywordViewMod
     }
 
     override fun onBindViewHolder(holder: KeywordViewHolder, position: Int) {
-        val it = holder.view
-        it.context.packageManager.run {
-            it.iconImageView.setImageDrawable(getApplicationIcon(dataset[position].packageName))
-        }
-        it.nameTextView.text = dataset[position].name
-        it.keywordTextView.text = dataset[position].keyword
+        with (holder.view) {
+            context.packageManager.run {
+                iconImageView.setImageDrawable(getApplicationIcon(dataset[position].packageName))
+            }
+            nameTextView.text = dataset[position].name
+            keywordTextView.text = dataset[position].keyword
 
-        it.keywordDeleteButton.setOnClickListener {
-            keywordViewModel.delete(dataset[position])
+            keywordDeleteButton.setOnClickListener {
+                deleteCallback(dataset[position])
+            }
         }
     }
 
     override fun getItemCount() = dataset.size
+
+    inner class KeywordViewHolder(val view: View): RecyclerView.ViewHolder(view)
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
+import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.EditorInfo
@@ -19,15 +20,12 @@ import kotlinx.android.synthetic.main.fragment_add.*
 
 class AddKeywordsFragment : Fragment() {
 
-    private lateinit var keywordViewModel: KeywordViewModel
-    private lateinit var appList: List<ActivityInfo>
-    private lateinit var viewAdapter: AddAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        keywordViewModel = ViewModelProvider(this).get(KeywordViewModel::class.java)
-        appList = getAppsInfo(context!!)
-        viewAdapter = AddAdapter(appList)
+    private val keywordViewModel by lazy {
+        ViewModelProvider(this).get(KeywordViewModel::class.java)
+    }
+    private val viewAdapter by lazy {
+        val appList = getAppsInfo(context!!)
+        AddAdapter(appList)
     }
 
     override fun onCreateView(
@@ -41,13 +39,11 @@ class AddKeywordsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         // update UI
-        val column = if (resources.configuration.orientation
-            == Configuration.ORIENTATION_PORTRAIT) 4 else 7
-
         appsGridView.apply {
             setHasFixedSize(true)
-            layoutManager = GridLayoutManager(context, column)
             adapter = viewAdapter
+            (layoutManager as GridLayoutManager).spanCount =
+                if (resources.configuration.orientation == ORIENTATION_PORTRAIT) 4 else 7
         }
 
         // bind action
@@ -55,7 +51,6 @@ class AddKeywordsFragment : Fragment() {
             if (actionId != EditorInfo.IME_ACTION_DONE) { return@setOnEditorActionListener false }
             addKeyword(keywordInput)
         }
-
         addButton.setOnClickListener {
             addKeyword(keywordInput)
         }

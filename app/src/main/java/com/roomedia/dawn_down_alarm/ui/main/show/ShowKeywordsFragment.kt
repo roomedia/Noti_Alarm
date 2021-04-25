@@ -12,11 +12,8 @@ import kotlinx.android.synthetic.main.fragment_show.*
 
 class ShowKeywordsFragment : Fragment() {
 
-    private lateinit var keywordViewModel: KeywordViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        keywordViewModel = ViewModelProvider(this).get(KeywordViewModel::class.java)
+    private val keywordViewModel by lazy {
+        ViewModelProvider(this).get(KeywordViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -29,14 +26,14 @@ class ShowKeywordsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        appsRecyclerView.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context)
-        }
+        val showAdapter = ShowAdapter(deleteCallback = { keywordViewModel.delete(it) })
+        appsRecyclerView.adapter = showAdapter
+        appsRecyclerView.setHasFixedSize(true)
+
         keywordViewModel.getAll().observe(
             viewLifecycleOwner,
             Observer { keywords ->
-                appsRecyclerView.adapter = ShowAdapter(keywords, keywordViewModel)
+                showAdapter.updateDataset(keywords)
             }
         )
     }

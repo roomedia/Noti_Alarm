@@ -1,4 +1,4 @@
-package com.roomedia.dawn_down_alarm.model
+package com.roomedia.dawn_down_alarm.entity
 
 import androidx.room.*
 

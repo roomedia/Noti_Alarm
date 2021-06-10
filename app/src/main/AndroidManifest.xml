@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.roomedia.dawn_down_alarm">
+
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,6 +17,7 @@
         android:fullBackupContent="true">
         <activity
             android:name="com.roomedia.dawn_down_alarm.presentation.view.activity.MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|colorMode"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,14 +26,8 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="com.roomedia.dawn_down_alarm.presentation.view.activity.AlarmActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize">
-        </activity>
-
         <service
-            android:name="com.roomedia.dawn_down_alarm.presentation.AlarmNotificationListenerService"
-            android:label="@string/app_name"
+            android:name=".presentation.AlarmNotificationListenerService"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />

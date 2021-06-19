@@ -21,11 +21,10 @@ class AppListFragment : Fragment() {
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
 
-    private val appListViewModel: AppListViewModel by viewModels {
+    val appListViewModel: AppListViewModel by viewModels {
         CommonViewModelFactory(AlarmApplication.instance.appDao)
     }
-
-    private val appListAdapter by lazy { AppListAdapter(WeakReference(childFragmentManager)) }
+    private val appListAdapter by lazy { AppListAdapter(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,

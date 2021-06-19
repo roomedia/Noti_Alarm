@@ -5,10 +5,10 @@ import androidx.room.*
 @Dao
 interface CommonDao<T> {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(entities: List<T>)
+    fun insert(entity: T)
 
     @Update
-    fun update(entities: List<T>)
+    fun update(entity: T)
 
     @Delete
     fun delete(entities: List<T>)

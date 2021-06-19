@@ -9,8 +9,10 @@
         <import type="com.roomedia.dawn_down_alarm.entity.Keyword" />
         <import type="com.roomedia.dawn_down_alarm.util.ExtensionFunctionsKt" />
         <import type="com.roomedia.dawn_down_alarm.presentation.view.adapter.AppListAdapter" />
+        <import type="com.roomedia.dawn_down_alarm.data.AppListViewModel" />
 
         <variable name="adapter" type="AppListAdapter" />
+        <variable name="viewModel" type="AppListViewModel" />
         <variable name="app" type="App" />
         <variable name="keywords" type="List&lt;Keyword>" />
     </data>
@@ -77,6 +79,8 @@
             android:id="@+id/enableSwitch"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:checked="@{app.isEnabled}"
+            android:onClick="@{() -> viewModel.updateEnabled(app)}"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             app:layout_constraintBottom_toBottomOf="parent"

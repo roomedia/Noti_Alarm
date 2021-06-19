@@ -7,9 +7,11 @@
         <import type="java.util.List" />
         <import type="com.roomedia.dawn_down_alarm.entity.App" />
         <import type="com.roomedia.dawn_down_alarm.entity.Keyword" />
+        <import type="com.roomedia.dawn_down_alarm.data.AppListViewModel" />
 
         <variable name="app" type="App" />
         <variable name="keywords" type="List&lt;Keyword>" />
+        <variable name="viewModel" type="AppListViewModel" />
     </data>
 
     <LinearLayout
@@ -55,8 +57,9 @@
                 android:id="@+id/enableSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:enabled="@{app.enabled}"
+                android:checked="@{app.enabled}"
                 android:gravity="top"
+                android:onClick="@{() -> viewModel.updateEnabled(app)}"
                 android:paddingStart="16dp"
                 android:paddingEnd="0dp" />
         </LinearLayout>

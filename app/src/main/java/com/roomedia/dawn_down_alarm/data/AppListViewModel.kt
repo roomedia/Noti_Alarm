@@ -16,6 +16,11 @@ class AppListViewModel(_dao: CommonDao<*>) : CommonViewModel<App>() {
         }
     }
 
+    fun updateEnabled(app: App) {
+        app.isEnabled = !app.isEnabled
+        update(app)
+    }
+
     fun delete(packageName: String) {
         viewModelScope.launch {
             dao.delete(packageName)

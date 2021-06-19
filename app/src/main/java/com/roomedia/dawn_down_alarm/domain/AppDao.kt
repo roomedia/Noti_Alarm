@@ -19,7 +19,7 @@ interface AppDao : CommonDao<App> {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(packageName: String) {
         AlarmApplication.instance.packageManager.apply {
-            insert(listOf(getApplicationInfo(packageName, 0).toApp()))
+            insert(getApplicationInfo(packageName, 0).toApp())
         }
     }
 
@@ -27,10 +27,10 @@ interface AppDao : CommonDao<App> {
         entities.forEach {
             val app = get(it.packageName)
             if (app == null) {
-                insert(listOf(it))
+                insert(it)
             } else {
                 app.timestamp = it.timestamp
-                update(listOf(app))
+                update(app)
             }
         }
     }

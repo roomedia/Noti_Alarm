@@ -3,16 +3,15 @@ package com.roomedia.dawn_down_alarm.presentation.view.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.roomedia.dawn_down_alarm.databinding.ItemAppListBinding
 import com.roomedia.dawn_down_alarm.entity.AppAndKeywords
+import com.roomedia.dawn_down_alarm.presentation.view.fragment.AppListFragment
 import com.roomedia.dawn_down_alarm.presentation.view.fragment.EditKeywordBottomSheetDialogFragment
-import java.lang.ref.WeakReference
 
-class AppListAdapter(private val fragmentManagerRef: WeakReference<FragmentManager>) : ListAdapter<AppAndKeywords, AppListAdapter.ViewHolder>(DiffUtilCallback) {
+class AppListAdapter(private val fragment: AppListFragment) : ListAdapter<AppAndKeywords, AppListAdapter.ViewHolder>(DiffUtilCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppListAdapter.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -25,14 +24,16 @@ class AppListAdapter(private val fragmentManagerRef: WeakReference<FragmentManag
     }
 
     fun showBottomSheetDialog(view: View) {
-        fragmentManagerRef.get()?.let { fragmentManager ->
-            EditKeywordBottomSheetDialogFragment(getItem(view.id)).show(fragmentManager, null)
-        }
+        EditKeywordBottomSheetDialogFragment(getItem(view.id)) {
+            notifyItemChanged(view.id)
+        }.show(fragment.childFragmentManager, null)
     }
 
     inner class ViewHolder(private val binding: ItemAppListBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(appAndKeywords: AppAndKeywords, position: Int) {
             binding.adapter = this@AppListAdapter
+            binding.viewModel = fragment.appListViewModel
+
             binding.app = appAndKeywords.app
             binding.keywords = appAndKeywords.keywords
             binding.root.id = position

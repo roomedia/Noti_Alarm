@@ -16,15 +16,15 @@ abstract class CommonViewModel<T> : ViewModel() {
     abstract val dao : CommonDao<T>
     protected val viewModelScope = CoroutineScope(Dispatchers.Default + Job())
 
-    fun insert(entities: List<T>) {
+    fun insert(entity: T) {
         viewModelScope.launch {
-            dao.insert(entities)
+            dao.insert(entity)
         }
     }
 
-    fun update(entities: List<T>) {
+    fun update(entities: T) {
         viewModelScope.launch {
-            dao.delete(entities)
+            dao.update(entities)
         }
     }
 

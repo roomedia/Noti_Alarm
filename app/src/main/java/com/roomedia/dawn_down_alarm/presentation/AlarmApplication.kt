@@ -6,6 +6,7 @@ import com.roomedia.dawn_down_alarm.domain.AppDatabase
 class AlarmApplication : Application() {
 
     private val database by lazy { AppDatabase.getInstance() }
+    val appDao by lazy { database.appDao() }
     val keywordDao by lazy { database.keywordDao() }
 
     override fun onCreate() {

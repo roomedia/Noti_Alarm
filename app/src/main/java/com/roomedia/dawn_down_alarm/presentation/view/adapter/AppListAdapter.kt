@@ -7,15 +7,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.roomedia.dawn_down_alarm.data.AppListViewModel
 import com.roomedia.dawn_down_alarm.databinding.ItemAppListBinding
-import com.roomedia.dawn_down_alarm.entity.App
-import com.roomedia.dawn_down_alarm.entity.Keyword
+import com.roomedia.dawn_down_alarm.entity.AppAndKeywords
 import com.roomedia.dawn_down_alarm.presentation.view.fragment.EditKeywordBottomSheetDialogFragment
 import java.lang.ref.WeakReference
 
-class AppListAdapter(private val fragmentManagerRef: WeakReference<FragmentManager>) : ListAdapter<App, AppListAdapter.ViewHolder>(DiffUtilCallback) {
+class AppListAdapter(private val fragmentManagerRef: WeakReference<FragmentManager>) : ListAdapter<AppAndKeywords, AppListAdapter.ViewHolder>(DiffUtilCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppListAdapter.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -34,26 +31,21 @@ class AppListAdapter(private val fragmentManagerRef: WeakReference<FragmentManag
     }
 
     inner class ViewHolder(private val binding: ItemAppListBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(app: App, position: Int) {
+        fun bind(appAndKeywords: AppAndKeywords, position: Int) {
             binding.adapter = this@AppListAdapter
-            binding.app = app
-            // TODO: change dummy keywords to room entity
-            app.keywords = listOf(
-                Keyword(app.packageName, "pack1", "name1"),
-                Keyword(app.appName, "pack2", "name2"),
-                Keyword(app.endTime.toString(), "pack3", "name3"),
-            )
+            binding.app = appAndKeywords.app
+            binding.keywords = appAndKeywords.keywords
             binding.root.id = position
         }
     }
 
-    object DiffUtilCallback : DiffUtil.ItemCallback<App>() {
-        override fun areItemsTheSame(oldItem: App, newItem: App): Boolean {
-            return oldItem.packageName == newItem.packageName
+    object DiffUtilCallback : DiffUtil.ItemCallback<AppAndKeywords>() {
+        override fun areItemsTheSame(oldItem: AppAndKeywords, newItem: AppAndKeywords): Boolean {
+            return oldItem.app?.packageName == newItem.app?.packageName
         }
 
-        override fun areContentsTheSame(oldItem: App, newItem: App): Boolean {
-            return oldItem == newItem
+        override fun areContentsTheSame(oldItem: AppAndKeywords, newItem: AppAndKeywords): Boolean {
+            return oldItem.app == newItem.app
         }
     }
 }

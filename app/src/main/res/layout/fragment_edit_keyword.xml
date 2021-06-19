@@ -4,26 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="app" type="com.roomedia.dawn_down_alarm.entity.App" />
+        <import type="java.util.List" />
+        <import type="com.roomedia.dawn_down_alarm.entity.App" />
+        <import type="com.roomedia.dawn_down_alarm.entity.Keyword" />
+
+        <variable name="app" type="App" />
+        <variable name="keywords" type="List&lt;Keyword>" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="56dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@android:color/secondary_text_dark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="24dp"
-            android:layout_marginTop="16dp">
+            android:padding="24dp">
 
             <ImageView
                 android:id="@+id/iconImageView"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
+                android:contentDescription="@string/icon_description"
                 android:src="@{app.icon}"
-                android:contentDescription="@string/icon_description" />
+                tools:src="@mipmap/ic_launcher" />
 
             <TextView
                 android:id="@+id/nameTextView"
@@ -33,16 +48,17 @@
                 android:layout_weight="1"
                 android:text="@{app.appName}"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="Application Name" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/enableSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:enabled="@{app.enabled}"
                 android:gravity="top"
                 android:paddingStart="16dp"
-                android:paddingEnd="0dp"
-                android:enabled="@{app.enabled}" />
+                android:paddingEnd="0dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -81,11 +97,11 @@
             android:id="@+id/keywordChipGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:chipItems="@{keywords}"
             android:paddingStart="32dp"
-            android:paddingEnd="24dp"
             android:paddingTop="24dp"
-            android:paddingBottom="0dp"
-            android:chipItems="@{app.keywords}" />
+            android:paddingEnd="24dp"
+            android:paddingBottom="0dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/keywordInputLayout"

@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.roomedia.dawn_down_alarm.R
 import com.roomedia.dawn_down_alarm.databinding.FragmentEditKeywordBinding
-import com.roomedia.dawn_down_alarm.entity.App
+import com.roomedia.dawn_down_alarm.entity.AppAndKeywords
 
-class EditKeywordBottomSheetDialogFragment(private val target: App) : BottomSheetDialogFragment() {
+class EditKeywordBottomSheetDialogFragment(private val target: AppAndKeywords) : BottomSheetDialogFragment() {
 
     private var _binding: FragmentEditKeywordBinding? = null
     private val binding get() = _binding!!
@@ -25,7 +25,8 @@ class EditKeywordBottomSheetDialogFragment(private val target: App) : BottomShee
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentEditKeywordBinding.inflate(inflater, container, false).apply {
-            app = target
+            app = target.app
+            keywords = target.keywords
             startTime.setIs24HourView(true)
             endTime.setIs24HourView(true)
             keywordInput.requestFocus()

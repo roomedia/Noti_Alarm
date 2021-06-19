@@ -1,48 +1,24 @@
 package com.roomedia.dawn_down_alarm.data
 
-import android.content.pm.ApplicationInfo
-import android.content.pm.ApplicationInfo.FLAG_SYSTEM
-import android.content.pm.PackageManager
-import android.content.pm.PackageManager.GET_META_DATA
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.roomedia.dawn_down_alarm.domain.AppDao
+import com.roomedia.dawn_down_alarm.domain.CommonDao
 import com.roomedia.dawn_down_alarm.entity.App
-import com.roomedia.dawn_down_alarm.presentation.AlarmApplication
-import java.util.*
+import kotlinx.coroutines.launch
 
-class AppListViewModel : ViewModel() {
+class AppListViewModel(_dao: CommonDao<*>) : CommonViewModel<App>() {
 
-    private val packageManager = AlarmApplication.instance.packageManager
-    private val _dataset = packageManager.getInstalledApplications(GET_META_DATA)
-        .filter { it.isInstalledByUser() }
-        .map { it.toApp(packageManager) }
-        .sortedBy { it.appName.toLowerCase(Locale.ROOT) }
-        .toMutableList()
-    val dataset = MutableLiveData<List<App>>(_dataset)
+    override val dao: AppDao = _dao as AppDao
+    val dataset get() = dao.getAppAndKeywords()
 
     fun insert(packageName: String) {
-        val app = packageManager.getApplicationInfo(packageName, GET_META_DATA).run {
-            if (!isInstalledByUser()) return
-            toApp(packageManager)
+        viewModelScope.launch {
+            dao.insert(packageName)
         }
-        _dataset.apply {
-            var index = binarySearch(app)
-            if (index < 0) index = -(index + 1)
-            add(index, app)
-        }
-        dataset.value = _dataset.toList()
     }
 
     fun delete(packageName: String) {
-        _dataset.removeAll { it.packageName.contentEquals(packageName) }
-        dataset.value = _dataset.toList()
-    }
-
-    private fun ApplicationInfo.isInstalledByUser(): Boolean {
-        return flags and FLAG_SYSTEM == 0
-    }
-
-    private fun ApplicationInfo.toApp(packageManager: PackageManager): App {
-        return App(packageName, loadLabel(packageManager).toString(), loadIcon(packageManager))
+        viewModelScope.launch {
+            dao.delete(packageName)
+        }
     }
 }

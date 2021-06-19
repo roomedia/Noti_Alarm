@@ -2,6 +2,7 @@ package com.roomedia.dawn_down_alarm.data
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.roomedia.dawn_down_alarm.domain.AppDao
 import com.roomedia.dawn_down_alarm.domain.CommonDao
 import com.roomedia.dawn_down_alarm.domain.KeywordDao
 import kotlinx.coroutines.CoroutineScope
@@ -13,9 +14,7 @@ import java.lang.IllegalArgumentException
 abstract class CommonViewModel<T> : ViewModel() {
 
     abstract val dao : CommonDao<T>
-    val dataset get() = dao.getAll()
-
-    private val viewModelScope = CoroutineScope(Dispatchers.Default + Job())
+    protected val viewModelScope = CoroutineScope(Dispatchers.Default + Job())
 
     fun insert(entities: List<T>) {
         viewModelScope.launch {
@@ -40,7 +39,8 @@ class CommonViewModelFactory(private val dao: CommonDao<*>) : ViewModelProvider.
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when (dao) {
             is KeywordDao -> KeywordViewModel(dao)
-            else -> AppListViewModel()
+            is AppDao -> AppListViewModel(dao)
+            else -> throw IllegalArgumentException("no viewModel for dao: ${dao::class.simpleName}")
         } as T
     }
 }

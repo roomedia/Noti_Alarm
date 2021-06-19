@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Dawn Down Alarm</string>
-    <string name="tab_text_1">Add Alarm</string>
-    <string name="tab_text_2">Edit Alarm</string>
-    <string name="add">Add</string>
-    <string name="delete">Delete</string>
-    <string name="hint">Input Alarm Keyword</string>
-    <string name="request">Please Input Alarm Keyword!</string>
-
-    <string name="switch_description">Alarm Switch</string>
-    <string name="grant_description">Please grant <b>Notification Access</b> permission \non <b>Dawn Down Alarm!</b></string>
-    <string name="grant_button_description">Grant Permission</string>
     <string name="icon_description">app icon</string>
-    <string name="alarm_description">PUSH <b>%1$d TIMES</b> TO KILL ALARM</string>
-    <string name="dummy_notification_1">Dummy Notification Triggered\nSomething Went WRONG!!\nTake a Look at Server</string>
-    <string name="dummy_notification_2">Dummy Notification Triggered\nSomething Went WRONG!!\nTake a Look at Server\n\nCode: 0x001230123001510250130502356043670585058473046025032042036040753078405650</string>
-    <string name="dummy_notification_3">Dummy Notification Triggered\nSomething Went WRONG!!\nTake a Look at Server\n\nCode: 0x001230123001510250130502356043670585058473046025032042036040753078405650001230123001510250130502356043670585058473046025032042036040753078405650001230123001510250130502356043670585058473046025032042036040753078405650001230123001510250130502356043670585058473046025032042036040753078405650001230123001510250130502356043670585058473046025032042036040753078405650</string>
+    <string name="hint">Input Alarm Keyword. (e.g.: Alert)</string>
+    <string name="active_time">Active Time: %02d:%02d ~ %02d:%02d</string>
+
+    <string name="grant_button_description">Grant Permission</string>
+    <string name="grant_description">Please grant <b>Notification Access</b> permission \non <b>Dawn Down Alarm!</b></string>
 </resources>

@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.roomedia.dawn_down_alarm.data
 
 import androidx.lifecycle.ViewModel
@@ -22,13 +24,13 @@ abstract class CommonViewModel<T> : ViewModel() {
         }
     }
 
-    fun update(entities: T) {
+    fun update(entity: T) {
         viewModelScope.launch {
-            dao.update(entities)
+            dao.update(entity)
         }
     }
 
-    fun delete(entities: List<T>) {
+    fun delete(entities: Collection<T>) {
         viewModelScope.launch {
             dao.delete(entities)
         }

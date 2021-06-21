@@ -6,44 +6,27 @@ import com.roomedia.dawn_down_alarm.entity.App
 import com.roomedia.dawn_down_alarm.entity.AppAndKeywords
 import com.roomedia.dawn_down_alarm.presentation.AlarmApplication
 import com.roomedia.dawn_down_alarm.util.toApp
+import io.reactivex.rxjava3.core.Single
 
 @Dao
 interface AppDao : CommonDao<App> {
     @Transaction
     @Query("SELECT * FROM App ORDER BY appName")
-    fun getAppAndKeywords(): LiveData<List<AppAndKeywords>>
-
-    @Query("SELECT * FROM App WHERE packageName == :packageName LIMIT 1")
-    fun get(packageName: String): App?
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(packageName: String) {
-        AlarmApplication.instance.packageManager.apply {
-            insert(getApplicationInfo(packageName, 0).toApp())
-        }
-    }
-
-    fun insertOrUpdate(entities: List<App>) {
-        entities.forEach {
-            val app = get(it.packageName)
-            if (app == null) {
-                insert(it)
-            } else {
-                app.timestamp = it.timestamp
-                update(app)
-            }
-        }
-    }
-
-    @Query("DELETE FROM App WHERE :packageName = packageName")
-    fun delete(packageName: String)
-
-    @Query("DELETE FROM App WHERE :timestamp > timestamp")
-    fun deleteBefore(timestamp: Long)
+    fun getAllAppAndKeywords(): LiveData<List<AppAndKeywords>>
 
     @Transaction
-    fun onOpen(entities: List<App>, timestamp: Long) {
-        insertOrUpdate(entities)
-        deleteBefore(timestamp)
+    @Query("SELECT * FROM App WHERE packageName == :packageName LIMIT 1")
+    fun getAppAndKeywords(packageName: String): Single<AppAndKeywords>
+
+    @Query("DELETE FROM App WHERE packageName = :packageName")
+    fun delete(packageName: String)
+
+    @Query("DELETE FROM App WHERE packageName NOT IN (:packageNames)")
+    fun deleteNotIn(packageNames: Collection<String>)
+
+    @Transaction
+    fun onOpen(entities: Collection<App>) {
+        insert(entities)
+        deleteNotIn(entities.map { it.packageName })
     }
 }

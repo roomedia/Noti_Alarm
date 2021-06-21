@@ -46,7 +46,7 @@ class AppListAdapter(private val fragment: AppListFragment) : ListAdapter<AppAnd
         }
 
         override fun areContentsTheSame(oldItem: AppAndKeywords, newItem: AppAndKeywords): Boolean {
-            return oldItem.app == newItem.app
+            return oldItem.app == newItem.app && oldItem.keywords == newItem.keywords
         }
     }
 }

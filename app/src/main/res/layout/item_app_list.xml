@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="java.util.List" />
+        <import type="java.util.Set" />
         <import type="com.roomedia.dawn_down_alarm.entity.App" />
         <import type="com.roomedia.dawn_down_alarm.entity.Keyword" />
         <import type="com.roomedia.dawn_down_alarm.util.ExtensionFunctionsKt" />
@@ -14,7 +14,7 @@
         <variable name="adapter" type="AppListAdapter" />
         <variable name="viewModel" type="AppListViewModel" />
         <variable name="app" type="App" />
-        <variable name="keywords" type="List&lt;Keyword>" />
+        <variable name="keywords" type="Set&lt;Keyword>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

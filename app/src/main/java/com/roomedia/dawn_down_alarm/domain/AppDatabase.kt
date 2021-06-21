@@ -27,14 +27,13 @@ abstract class AppDatabase : RoomDatabase() {
         override fun onOpen(db: SupportSQLiteDatabase) {
             super.onOpen(db)
             GlobalScope.launch {
-                val timestamp = Date().time
                 val dataset = AlarmApplication.instance.packageManager
                     .getInstalledApplications(PackageManager.GET_META_DATA)
                     .filter { it.isInstalledByUser() }
-                    .map { it.toApp(timestamp) }
+                    .map { it.toApp() }
                     .sortedBy { it.appName.toLowerCase(Locale.ROOT) }
-                    .toMutableList()
-                instance!!.appDao().onOpen(dataset, timestamp)
+                    .toSet()
+                instance!!.appDao().onOpen(dataset)
             }
         }
     }

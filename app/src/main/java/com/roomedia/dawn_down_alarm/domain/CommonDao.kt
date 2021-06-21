@@ -7,9 +7,12 @@ interface CommonDao<T> {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(entity: T)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insert(entities: Collection<T>)
+
     @Update
     fun update(entity: T)
 
     @Delete
-    fun delete(entities: List<T>)
+    fun delete(entities: Collection<T>)
 }

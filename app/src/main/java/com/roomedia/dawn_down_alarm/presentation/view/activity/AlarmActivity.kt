@@ -4,10 +4,12 @@ package com.roomedia.dawn_down_alarm.presentation.view.activity
 
 import android.app.KeyguardManager
 import android.content.Context
+import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.SoundPool
 import android.os.Build
 import android.os.Bundle
+import android.os.Vibrator
 import android.view.View
 import android.view.WindowManager.LayoutParams.*
 import androidx.activity.viewModels
@@ -32,9 +34,13 @@ class AlarmActivity : AppCompatActivity() {
     private val prefs by lazy { getSharedPreferences(application.packageName, MODE_PRIVATE) }
 
     private val audioManager by lazy { getSystemService(Context.AUDIO_SERVICE) as AudioManager }
-    private val soundPool by lazy { SoundPool.Builder().setMaxStreams(1).build() }
+    private val soundPool by lazy {
+        val streamType = AudioAttributes.Builder().setLegacyStreamType(STREAM_TYPE).build()
+        SoundPool.Builder().setAudioAttributes(streamType).setMaxStreams(1).build()
+    }
     private var streamID: Int? = null
-    private var volume = 0
+
+    private val vibrator by lazy { getSystemService(Context.VIBRATOR_SERVICE) as Vibrator }
 
     private val appListViewModel: AppListViewModel by viewModels {
         CommonViewModelFactory(AlarmApplication.instance.appDao)
@@ -109,26 +115,42 @@ class AlarmActivity : AppCompatActivity() {
 
     private fun setOptions() {
         window.attributes.screenBrightness = prefs.getFloat("brightness", 1.0f)
-        volume = prefs.getInt("alarm_volume", 15)
-
         prefs.edit().putInt("user_volume", audioManager.getStreamVolume(STREAM_TYPE)).apply()
-        // vibration = prefs.getInt("vibration", 0)
     }
 
     private fun startAlarm() {
         if (streamID != null) return
-        audioManager.setStreamVolume(STREAM_TYPE, volume, STREAM_FLAG)
+        startSound()
+        startVibrate()
+    }
+
+    private fun startSound() {
+        audioManager.setStreamVolume(STREAM_TYPE, prefs.getInt("alarm_volume", 15), STREAM_FLAG)
         streamID = soundPool.load(this, R.raw.alarm, 1)
         soundPool.setOnLoadCompleteListener { soundPool, sampleId, _ ->
             soundPool.play(sampleId, 1f, 1f, 1, -1, 1f)
         }
     }
 
+    private fun startVibrate() {
+        if (prefs.getBoolean("vibrate", false)) {
+            vibrator.vibrate(longArrayOf(100, 1000), 0)
+        }
+    }
+
     private fun stopAlarm() {
-        volume = prefs.getInt("user_volume", 0)
-        audioManager.setStreamVolume(STREAM_TYPE, volume, STREAM_FLAG)
+        stopSound()
+        stopVibrate()
+    }
+
+    private fun stopSound() {
+        audioManager.setStreamVolume(STREAM_TYPE, prefs.getInt("user_volume", 0), STREAM_FLAG)
         soundPool.stop(streamID ?: 1)
         streamID = null
+    }
+
+    private fun stopVibrate() {
+        vibrator.cancel()
     }
 
     companion object {

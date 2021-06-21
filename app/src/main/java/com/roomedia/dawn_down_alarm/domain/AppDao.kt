@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.roomedia.dawn_down_alarm.entity.App
 import com.roomedia.dawn_down_alarm.entity.AppAndKeywords
-import com.roomedia.dawn_down_alarm.presentation.AlarmApplication
-import com.roomedia.dawn_down_alarm.util.toApp
 import io.reactivex.rxjava3.core.Single
 
 @Dao

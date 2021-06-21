@@ -1,7 +1,9 @@
 package com.roomedia.dawn_down_alarm.presentation
 
 import android.app.Application
+import com.google.android.gms.ads.MobileAds
 import com.roomedia.dawn_down_alarm.domain.AppDatabase
+import com.roomedia.dawn_down_alarm.util.AppOpenManager
 
 class AlarmApplication : Application() {
 
@@ -12,6 +14,8 @@ class AlarmApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         _instance = this
+        MobileAds.initialize(this) {}
+        AppOpenManager(this)
     }
 
     companion object {

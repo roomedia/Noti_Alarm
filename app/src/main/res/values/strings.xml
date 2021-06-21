@@ -7,4 +7,7 @@
 
     <string name="grant_button_description">Grant Permission</string>
     <string name="grant_description">Please grant <b>Notification Access</b> permission \non <b>Dawn Down Alarm!</b></string>
+    <string name="alarm_description">PUSH <b>%1$d TIMES</b> TO KILL ALARM</string>
+    <string name="watch_ad">Watch Ad</string>
+    <string name="close">Close Application</string>
 </resources>

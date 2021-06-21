@@ -5,7 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
-import com.roomedia.dawn_down_alarm.presentation.view.activity.MainActivity
+import com.roomedia.dawn_down_alarm.entity.App
+import com.roomedia.dawn_down_alarm.presentation.view.activity.AlarmActivity
 import com.roomedia.dawn_down_alarm.util.getTimeValue
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
@@ -21,7 +22,7 @@ class AlarmNotificationListenerService : NotificationListenerService() {
         sbn ?: return
         appDao.getAppAndKeywords(sbn.packageName).subscribeOn(Schedulers.io()).subscribe({
             val (app, keywords) = it
-            val text = getNotificationFullText(sbn.notification.extras)
+            val notificationText = getNotificationFullText(sbn.notification.extras)
             val time = Calendar.getInstance().getTimeValue()
             when {
                 app == null
@@ -29,28 +30,30 @@ class AlarmNotificationListenerService : NotificationListenerService() {
                         || keywords.isEmpty()
                         || (app.startTime <= app.endTime && time !in app.startTime..app.endTime)
                         || (app.startTime > app.endTime && time !in app.startTime..1439 && time !in 0..app.endTime)
-                        || text.isEmpty()
-                        || keywords.fold(true) { acc, (keyword) -> acc && !text.contains(keyword.toLowerCase(Locale.ROOT)) }
+                        || notificationText.isEmpty()
+                        || keywords.fold(true) { acc, (keyword) -> acc && !notificationText.contains(keyword.toLowerCase(Locale.ROOT)) }
                 -> return@subscribe
-                else -> startActivity()
+                else -> startActivity(app, notificationText)
             }
         }) {}
     }
 
     private fun getNotificationFullText(bundle: Bundle): String {
-        return with (bundle) {
-            getString(Notification.EXTRA_TITLE, "") +
-                    getCharSequence(Notification.EXTRA_TEXT, "") +
-                    getCharSequence(Notification.EXTRA_SUB_TEXT, "")
-        }.toLowerCase(Locale.ROOT)
+        return listOf(
+            bundle.getString(Notification.EXTRA_TITLE, ""),
+            bundle.getCharSequence(Notification.EXTRA_TEXT, ""),
+            bundle.getCharSequence(Notification.EXTRA_SUB_TEXT, "")
+        ).joinToString(separator = "\n").toLowerCase(Locale.ROOT)
     }
 
-    private fun startActivity() {
+    private fun startActivity(app: App, notificationText: String) {
         CoroutineScope(Dispatchers.Main).launch {
-            val intent = Intent(applicationContext, MainActivity::class.java)
+            val intent = Intent(applicationContext, AlarmActivity::class.java)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
                 .addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                .putExtra("packageName", app.packageName)
+                .putExtra("notification", notificationText)
             startActivity(intent)
         }
     }

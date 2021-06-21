@@ -10,7 +10,7 @@ import com.roomedia.dawn_down_alarm.presentation.view.fragment.AppListFragment a
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val prefs by lazy { getSharedPreferences(localClassName, MODE_PRIVATE) }
+    private val prefs by lazy { getSharedPreferences(application.packageName, MODE_PRIVATE) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

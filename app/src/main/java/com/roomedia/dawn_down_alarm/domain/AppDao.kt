@@ -9,7 +9,7 @@ import io.reactivex.rxjava3.core.Single
 @Dao
 interface AppDao : CommonDao<App> {
     @Transaction
-    @Query("SELECT * FROM App ORDER BY appName")
+    @Query("SELECT * FROM App ORDER BY appName COLLATE NOCASE")
     fun getAllAppAndKeywords(): LiveData<List<AppAndKeywords>>
 
     @Transaction

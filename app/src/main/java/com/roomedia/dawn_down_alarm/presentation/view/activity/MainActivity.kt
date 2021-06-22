@@ -3,14 +3,15 @@ package com.roomedia.dawn_down_alarm.presentation.view.activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
+import androidx.preference.PreferenceManager
 import com.roomedia.dawn_down_alarm.databinding.ActivityMainBinding
 import com.roomedia.dawn_down_alarm.presentation.view.fragment.GrantFragment
-import com.roomedia.dawn_down_alarm.presentation.view.fragment.AppListFragment as AppListFragment1
+import com.roomedia.dawn_down_alarm.presentation.view.fragment.NavFragment
 
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val prefs by lazy { getSharedPreferences(application.packageName, MODE_PRIVATE) }
+    private val prefs by lazy { PreferenceManager.getDefaultSharedPreferences(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun selectFragmentBy(isGranted: Boolean) {
         val fragment = when (isGranted) {
-            true -> AppListFragment1()
+            true -> NavFragment()
             false -> GrantFragment()
         }
         supportFragmentManager.beginTransaction().apply {

@@ -51,7 +51,7 @@ class AlarmNotificationListenerService : NotificationListenerService() {
             val intent = Intent(applicationContext, AlarmActivity::class.java)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                .addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                .addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
                 .putExtra("packageName", app.packageName)
                 .putExtra("notification", notificationText)
             startActivity(intent)

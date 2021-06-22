@@ -16,6 +16,11 @@
     <string name="enabled">Enabled</string>
     <string name="has_keywords">Keywords</string>
 
+    <string name="able_app">%s App</string>
+    <string name="enable">Enable</string>
+    <string name="disable">Disable</string>
+    <string name="delete_all_keywords">Delete All Keywords</string>
+
     <string name="info">Info</string>
     <string name="version">Version</string>
     <string name="check_for_update">Check For Update</string>

@@ -1,0 +1,8 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.roomedia.dawn_down_alarm">
+    <application android:name=".presentation.AlarmApplication">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/debug_app_id" />
+    </application>
+</manifest>

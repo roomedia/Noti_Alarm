@@ -1,18 +1,18 @@
 package com.roomedia.dawn_down_alarm.domain
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
 interface CommonDao<T> {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(entities: List<T>)
+    fun insert(entity: T)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insert(entities: Collection<T>)
 
     @Update
-    fun update(entities: List<T>)
+    fun update(entity: T)
 
     @Delete
-    fun delete(entities: List<T>)
-
-    fun getAll(): LiveData<List<T>>
+    fun delete(entities: Collection<T>)
 }

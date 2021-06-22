@@ -98,3 +98,6 @@ lint/tmp/
 
 # Android Profiling
 *.hprof
+
+# private key
+app/src/main/res/values/admob.xml

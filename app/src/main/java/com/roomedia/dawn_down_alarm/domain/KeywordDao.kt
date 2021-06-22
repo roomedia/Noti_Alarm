@@ -1,14 +1,18 @@
 package com.roomedia.dawn_down_alarm.domain
 
-import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Query
+import androidx.room.Transaction
 import com.roomedia.dawn_down_alarm.entity.Keyword
 
 @Dao
 interface KeywordDao : CommonDao<Keyword> {
-    @Query("SELECT * FROM Keyword")
-    override fun getAll(): LiveData<List<Keyword>>
+    @Query("DELETE FROM Keyword WHERE packageName == :packageName")
+    fun delete(packageName: String)
 
-    @Query("SELECT * FROM Keyword WHERE package == :packageName")
-    fun get(packageName: String): LiveData<List<Keyword>>
+    @Transaction
+    fun replace(packageName: String, keywords: Collection<Keyword>) {
+        delete(packageName)
+        insert(keywords)
+    }
 }

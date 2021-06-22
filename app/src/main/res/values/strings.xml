@@ -7,4 +7,21 @@
 
     <string name="grant_button_description">Grant Permission</string>
     <string name="grant_description">Please grant <b>Notification Access</b> permission \non <b>Dawn Down Alarm!</b></string>
+    <string name="alarm_description">PUSH <b>%1$d TIMES</b> TO KILL ALARM</string>
+    <string name="watch_ad">Watch Ad</string>
+    <string name="close">Close Application</string>
+    <string name="apps">Apps</string>
+
+    <string name="info">Info</string>
+    <string name="version">Version</string>
+    <string name="check_for_update">Check For Update</string>
+    <string name="feedback">Send Feedback</string>
+    <string name="license">Open Source License</string>
+
+    <string name="settings">Settings</string>
+    <string name="brightness">Brightness</string>
+    <string name="volume">Volume</string>
+    <string name="vibration">Vibration</string>
+    <string name="test">Test</string>
+    <string name="test_notification">TEST ALARM\nThis is a test alarm to confirm user settings</string>
 </resources>

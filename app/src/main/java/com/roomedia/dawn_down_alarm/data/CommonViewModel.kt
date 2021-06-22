@@ -1,7 +1,10 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.roomedia.dawn_down_alarm.data
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.roomedia.dawn_down_alarm.domain.AppDao
 import com.roomedia.dawn_down_alarm.domain.CommonDao
 import com.roomedia.dawn_down_alarm.domain.KeywordDao
 import kotlinx.coroutines.CoroutineScope
@@ -13,23 +16,21 @@ import java.lang.IllegalArgumentException
 abstract class CommonViewModel<T> : ViewModel() {
 
     abstract val dao : CommonDao<T>
-    val dataset get() = dao.getAll()
+    protected val viewModelScope = CoroutineScope(Dispatchers.Default + Job())
 
-    private val viewModelScope = CoroutineScope(Dispatchers.Default + Job())
-
-    fun insert(entities: List<T>) {
+    fun insert(entity: T) {
         viewModelScope.launch {
-            dao.insert(entities)
+            dao.insert(entity)
         }
     }
 
-    fun update(entities: List<T>) {
+    fun update(entity: T) {
         viewModelScope.launch {
-            dao.delete(entities)
+            dao.update(entity)
         }
     }
 
-    fun delete(entities: List<T>) {
+    fun delete(entities: Collection<T>) {
         viewModelScope.launch {
             dao.delete(entities)
         }
@@ -40,7 +41,8 @@ class CommonViewModelFactory(private val dao: CommonDao<*>) : ViewModelProvider.
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when (dao) {
             is KeywordDao -> KeywordViewModel(dao)
-            else -> AppListViewModel()
+            is AppDao -> AppListViewModel(dao)
+            else -> throw IllegalArgumentException("no viewModel for dao: ${dao::class.simpleName}")
         } as T
     }
 }

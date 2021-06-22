@@ -1,0 +1,59 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <PreferenceCategory
+        app:title="@string/info">
+
+        <EditTextPreference
+            app:key="version"
+            app:title="@string/version"
+            app:selectable="false"
+            app:useSimpleSummaryProvider="true"
+            tools:defaultValue="1.3" />
+
+        <Preference
+            app:key="update"
+            app:title="@string/check_for_update" />
+
+        <Preference
+            app:key="feedback"
+            app:title="@string/feedback" />
+
+        <Preference
+            app:key="license"
+            app:title="@string/license" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="@string/settings">
+
+        <SeekBarPreference
+            app:key="brightness"
+            app:title="@string/brightness"
+            app:min="10"
+            android:max="100"
+            app:defaultValue="100"
+            app:showSeekBarValue="true" />
+
+        <SeekBarPreference
+            app:key="volume"
+            app:title="@string/volume"
+            app:min="1"
+            android:max="15"
+            app:defaultValue="15"
+            app:showSeekBarValue="true" />
+
+        <SwitchPreferenceCompat
+            app:key="vibration"
+            app:title="@string/vibration"
+            app:defaultValue="true" />
+
+        <Preference
+            app:key="test"
+            app:title="@string/test" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

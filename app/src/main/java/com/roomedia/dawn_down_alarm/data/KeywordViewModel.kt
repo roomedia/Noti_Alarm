@@ -9,6 +9,12 @@ class KeywordViewModel(_dao: CommonDao<*>) : CommonViewModel<Keyword>() {
 
     override val dao: KeywordDao = _dao as KeywordDao
 
+    fun delete(packageName: String) {
+        viewModelScope.launch {
+            dao.delete(packageName)
+        }
+    }
+
     fun replace(packageName: String, keywords: Set<Keyword>) {
         viewModelScope.launch {
             dao.replace(packageName, keywords)

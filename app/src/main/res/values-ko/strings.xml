@@ -12,6 +12,15 @@
     <string name="close">애플리케이션 종료</string>
     <string name="apps">목록</string>
 
+    <string name="search_hint">앱 이름, 키워드, 초성 검색</string>
+    <string name="enabled">활성화</string>
+    <string name="has_keywords">키워드</string>
+
+    <string name="able_app">앱 %s</string>
+    <string name="enable">활성화</string>
+    <string name="disable">비활성화</string>
+    <string name="delete_all_keywords">키워드 전체 삭제</string>
+
     <string name="info">정보</string>
     <string name="version">버전</string>
     <string name="check_for_update">최신 버전 체크</string>

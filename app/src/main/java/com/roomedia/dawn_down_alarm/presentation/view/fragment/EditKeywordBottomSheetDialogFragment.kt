@@ -75,7 +75,7 @@ class EditKeywordBottomSheetDialogFragment(private val target: AppAndKeywords, p
             startTime = binding.startTime.getTimeValue()
             endTime = binding.endTime.getTimeValue()
         }
-        if (!oldApp.equals(newApp) || newKeywords != oldKeywords) {
+        if (oldApp != newApp || newKeywords != oldKeywords) {
             appListViewModel.update(newApp)
             keywordViewModel.replace(packageName, newKeywords)
             target.app = newApp

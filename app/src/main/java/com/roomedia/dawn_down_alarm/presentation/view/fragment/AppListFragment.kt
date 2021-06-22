@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.roomedia.dawn_down_alarm.data.AppListViewModel
@@ -33,6 +34,26 @@ class AppListFragment : Fragment() {
     ): View {
         _binding = FragmentListBinding.inflate(inflater, container, false).apply {
             appsRecyclerView.adapter = appListAdapter
+            searchView.setOnClickListener {
+                searchView.isIconified = false
+            }
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    searchView.clearFocus()
+                    return true
+                }
+
+                override fun onQueryTextChange(query: String?): Boolean {
+                    appListAdapter.updateQuery(query)
+                    return false
+                }
+            })
+            enabledChip.setOnCheckedChangeListener { _, value ->
+                appListAdapter.updateFilter(enabledFilter = value)
+            }
+            hasKeywordsChip.setOnCheckedChangeListener { _, value ->
+                appListAdapter.updateFilter(hasKeywordsFilter = value)
+            }
         }
         subscribeViewModel()
         registerBroadcastReceiver()
@@ -46,7 +67,7 @@ class AppListFragment : Fragment() {
 
     private fun subscribeViewModel() {
         appListViewModel.dataset.observe({ lifecycle }) { appsWithKeywords ->
-            appListAdapter.submitList(appsWithKeywords)
+            appListAdapter.updateList(appsWithKeywords)
         }
     }
 

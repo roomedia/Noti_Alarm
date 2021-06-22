@@ -66,6 +66,7 @@ dependencies {
 
     // coroutine
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+    implementation files('libs/KoreanTextMatcher-3.99.jar')
 
     // room
     def room_version = "2.3.0"

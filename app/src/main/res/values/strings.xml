@@ -12,6 +12,10 @@
     <string name="close">Close Application</string>
     <string name="apps">Apps</string>
 
+    <string name="search_hint">App Name, Keyword</string>
+    <string name="enabled">Enabled</string>
+    <string name="has_keywords">Keywords</string>
+
     <string name="info">Info</string>
     <string name="version">Version</string>
     <string name="check_for_update">Check For Update</string>

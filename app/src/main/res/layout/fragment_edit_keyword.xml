@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="java.util.List" />
+        <import type="com.roomedia.dawn_down_alarm.entity.App" />
+        <import type="com.roomedia.dawn_down_alarm.entity.Keyword" />
+        <import type="com.roomedia.dawn_down_alarm.data.AppListViewModel" />
+
+        <variable name="app" type="App" />
+        <variable name="keywords" type="List&lt;Keyword>" />
+        <variable name="viewModel" type="AppListViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="56dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@android:color/secondary_text_dark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp">
+
+            <ImageView
+                android:id="@+id/iconImageView"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:contentDescription="@string/icon_description"
+                android:src="@{app.icon}"
+                tools:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/nameTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:text="@{app.appName}"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="Application Name" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/enableSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:checked="@{app.enabled}"
+                android:gravity="top"
+                android:paddingStart="16dp"
+                android:paddingEnd="0dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/timePickerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:elevation="-1dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TimePicker
+                android:id="@+id/startTime"
+                android:layout_width="wrap_content"
+                android:layout_height="168dp"
+                android:layout_weight="1"
+                android:timePickerMode="spinner"
+                android:timeValue="@{app.startTime}" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="~"
+                tools:ignore="HardcodedText" />
+
+            <TimePicker
+                android:id="@+id/endTime"
+                android:layout_width="wrap_content"
+                android:layout_height="168dp"
+                android:layout_weight="1"
+                android:timePickerMode="spinner"
+                android:timeValue="@{app.endTime}" />
+        </LinearLayout>
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/keywordChipGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="32dp"
+            android:paddingTop="24dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="0dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/keywordInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:hint="@string/hint"
+            android:paddingBottom="32dp"
+            app:boxStrokeColor="@color/colorAccent"
+            app:endIconMode="clear_text"
+            app:hintTextColor="@color/colorAccent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/keywordInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="textShortMessage|text"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+</layout>

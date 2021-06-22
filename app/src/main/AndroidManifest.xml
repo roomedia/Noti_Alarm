@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.roomedia.dawn_down_alarm">
+
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
+        android:name=".presentation.AlarmApplication"
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar"
-        android:fullBackupContent="true">
+        android:theme="@style/AppTheme.DayNight.NoActionBar"
+        tools:node="merge">
+
         <activity
-            android:name="com.roomedia.dawn_down_alarm.ui.main.MainActivity"
+            android:name=".presentation.view.activity.MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|colorMode"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,11 +31,19 @@
         </activity>
 
         <activity
-            android:name="com.roomedia.dawn_down_alarm.ui.alarm.AlarmActivity">
-        </activity>
+            android:name=".presentation.view.activity.AlarmActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <service android:name="com.roomedia.dawn_down_alarm.NotificationAlarmListener"
-            android:label="@string/app_name"
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:theme="@style/AppTheme.DayNight" />
+
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+            android:theme="@style/AppTheme.DayNight" />
+
+        <service
+            android:name=".presentation.AlarmNotificationListenerService"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />

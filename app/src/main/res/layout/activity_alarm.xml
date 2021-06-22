@@ -44,17 +44,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameTextView"
-        tools:text="@string/dummy_notification_3" />
+        tools:text="Push Notification Title\nPush Text Body\nPush Text Subbody" />
 
     <Button
         android:id="@+id/awakeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
         android:text="@string/alarm_description"
+        android:layout_margin="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.64" />
+
+    <Button
+        android:id="@+id/closeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/close"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/awakeButton"
+        app:layout_constraintStart_toStartOf="@+id/awakeButton"
+        app:layout_constraintTop_toBottomOf="@+id/awakeButton"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

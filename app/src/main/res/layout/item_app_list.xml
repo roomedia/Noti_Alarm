@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="java.util.Set" />
+        <import type="com.roomedia.dawn_down_alarm.entity.App" />
+        <import type="com.roomedia.dawn_down_alarm.entity.Keyword" />
+        <import type="com.roomedia.dawn_down_alarm.util.ExtensionFunctionsKt" />
+        <import type="com.roomedia.dawn_down_alarm.presentation.view.adapter.AppListAdapter" />
+        <import type="com.roomedia.dawn_down_alarm.data.AppListViewModel" />
+
+        <variable name="adapter" type="AppListAdapter" />
+        <variable name="viewModel" type="AppListViewModel" />
+        <variable name="app" type="App" />
+        <variable name="keywords" type="Set&lt;Keyword>" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{adapter::showBottomSheetDialog}">
+
+        <ImageView
+            android:id="@+id/iconImageView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/icon_description"
+            android:src="@{app.icon}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@{app.appName}"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/enableSwitch"
+            app:layout_constraintStart_toEndOf="@+id/iconImageView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="애플리케이션 이름" />
+
+        <TextView
+            android:id="@+id/timeTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@{ExtensionFunctionsKt.joinToString(app.startTime, app.endTime)}"
+            app:layout_constraintEnd_toEndOf="@+id/nameTextView"
+            app:layout_constraintStart_toStartOf="@+id/nameTextView"
+            app:layout_constraintTop_toBottomOf="@+id/nameTextView"
+            tools:text="활성 시간: 18:00 - 07:00" />
+
+        <TextView
+            android:id="@+id/keywordTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="16dp"
+            android:text="@{ExtensionFunctionsKt.joinToString(keywords)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/nameTextView"
+            app:layout_constraintStart_toStartOf="@+id/nameTextView"
+            app:layout_constraintTop_toBottomOf="@+id/timeTextView"
+            tools:text="[긴급], 알림, 경고, 운영 상의 변경 사항을 감지하여 이에 알려드립니다." />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/enableSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:checked="@{app.isEnabled}"
+            android:onClick="@{() -> viewModel.updateEnabled(app)}"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

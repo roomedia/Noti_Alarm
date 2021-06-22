@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">새벽다운 알람</string>
-    <string name="tab_text_1">알람 추가</string>
-    <string name="tab_text_2">알람 편집</string>
-    <string name="add">추가</string>
-    <string name="delete">삭제</string>
-    <string name="hint">알람 키워드 입력</string>
-    <string name="request">키워드를 입력하세요!</string>
-
-    <string name="switch_description">알람 스위치</string>
-    <string name="grant_description"><b>새벽다운 알람</b>의 \n<b>알림 접근 권한</b>을 허용해주세요!</string>
-    <string name="grant_button_description">권한 허용</string>
     <string name="icon_description">앱 아이콘</string>
+    <string name="hint">키워드를 입력해주세요. (예: 긴급)</string>
+    <string name="active_time">활성 시간: %02d:%02d ~ %02d:%02d</string>
+
+    <string name="grant_button_description">권한 허용</string>
+    <string name="grant_description"><b>새벽다운 알람</b>의 \n<b>알림 접근 권한</b>을 허용해주세요!</string>
     <string name="alarm_description">%1$d번 눌러 알람 끄기</string>
-    <string name="dummy_notification_1">Dummy Notification Triggered\nSomething Went WRONG!!\nTake a Look at Server</string>
-    <string name="dummy_notification_2">Dummy Notification Triggered\nSomething Went WRONG!!\nTake a Look at Server\n\nCode: 0x001230123001510250130502356043670585058473046025032042036040753078405650</string>
-    <string name="dummy_notification_3">Dummy Notification Triggered\nSomething Went WRONG!!\nTake a Look at Server\n\nCode: 0x001230123001510250130502356043670585058473046025032042036040753078405650001230123001510250130502356043670585058473046025032042036040753078405650001230123001510250130502356043670585058473046025032042036040753078405650001230123001510250130502356043670585058473046025032042036040753078405650001230123001510250130502356043670585058473046025032042036040753078405650</string>
+    <string name="watch_ad">광고 보기</string>
+    <string name="close">애플리케이션 종료</string>
+    <string name="apps">목록</string>
+
+    <string name="search_hint">앱 이름, 키워드, 초성 검색</string>
+    <string name="enabled">활성화</string>
+    <string name="has_keywords">키워드</string>
+
+    <string name="info">정보</string>
+    <string name="version">버전</string>
+    <string name="check_for_update">최신 버전 체크</string>
+    <string name="feedback">피드백 보내기</string>
+    <string name="license">오픈소스 라이선스</string>
+
+    <string name="settings">설정</string>
+    <string name="brightness">밝기</string>
+    <string name="volume">볼륨</string>
+    <string name="vibration">진동</string>
+    <string name="test">테스트</string>
+    <string name="test_notification">테스트 알람\n사용자 설정 확인을 위한 테스트 알람 입니다.</string>
 </resources>

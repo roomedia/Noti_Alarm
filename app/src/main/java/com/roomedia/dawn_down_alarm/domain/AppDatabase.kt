@@ -11,7 +11,7 @@ import com.roomedia.dawn_down_alarm.entity.App
 import com.roomedia.dawn_down_alarm.entity.Converters
 import com.roomedia.dawn_down_alarm.entity.Keyword
 import com.roomedia.dawn_down_alarm.presentation.AlarmApplication
-import com.roomedia.dawn_down_alarm.util.isInstalledByUser
+import com.roomedia.dawn_down_alarm.util.isNotForSystem
 import com.roomedia.dawn_down_alarm.util.toApp
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -42,7 +42,7 @@ abstract class AppDatabase : RoomDatabase() {
                 GlobalScope.launch {
                     val dataset = AlarmApplication.instance.packageManager
                         .getInstalledApplications(PackageManager.GET_META_DATA)
-                        .filter { it.isInstalledByUser() }
+                        .filter { it.isNotForSystem() }
                         .map { it.toApp() }
                         .sortedBy { it.appName.toLowerCase(Locale.ROOT) }
                         .toSet()

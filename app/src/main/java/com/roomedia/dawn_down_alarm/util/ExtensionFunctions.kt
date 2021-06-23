@@ -37,8 +37,9 @@ fun Set<Keyword>.joinToString(): String {
     return joinToString { it.keyword }
 }
 
-fun ApplicationInfo.isInstalledByUser(): Boolean {
-    return flags and ApplicationInfo.FLAG_SYSTEM == 0
+fun ApplicationInfo.isNotForSystem(): Boolean {
+    return AlarmApplication.instance.packageManager
+        .getLaunchIntentForPackage(packageName) != null
 }
 
 fun ApplicationInfo.toApp(): App {

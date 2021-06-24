@@ -25,6 +25,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/grant_button_description"
         android:textStyle="bold"
+        android:textColor="@android:color/primary_text_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/grantTextView" />

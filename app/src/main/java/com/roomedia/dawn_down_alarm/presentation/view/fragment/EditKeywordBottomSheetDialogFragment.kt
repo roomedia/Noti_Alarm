@@ -15,12 +15,13 @@ import com.roomedia.dawn_down_alarm.data.AppListViewModel
 import com.roomedia.dawn_down_alarm.data.CommonViewModelFactory
 import com.roomedia.dawn_down_alarm.data.KeywordViewModel
 import com.roomedia.dawn_down_alarm.databinding.FragmentEditKeywordBinding
-import com.roomedia.dawn_down_alarm.entity.AppAndKeywords
+import com.roomedia.dawn_down_alarm.entity.App
 import com.roomedia.dawn_down_alarm.entity.Keyword
 import com.roomedia.dawn_down_alarm.presentation.AlarmApplication
 import com.roomedia.dawn_down_alarm.util.getTimeValue
+import io.reactivex.rxjava3.schedulers.Schedulers
 
-class EditKeywordBottomSheetDialogFragment(private val target: AppAndKeywords, private val onDestroyCallback: () -> Unit) : BottomSheetDialogFragment() {
+class EditKeywordBottomSheetDialogFragment(private val packageName: String, private val onDestroyCallback: () -> Unit) : BottomSheetDialogFragment() {
 
     private var _binding: FragmentEditKeywordBinding? = null
     private val binding get() = _binding!!
@@ -30,10 +31,9 @@ class EditKeywordBottomSheetDialogFragment(private val target: AppAndKeywords, p
         CommonViewModelFactory(AlarmApplication.instance.keywordDao)
     }
 
-    private val oldApp = target.app!!.copy()
-    private val oldKeywords = target.keywords
-    private val newKeywords = target.keywords.toMutableSet()
-    private val packageName = oldApp.packageName
+    private lateinit var oldApp: App
+    private lateinit var oldKeywords: Set<Keyword>
+    private lateinit var newKeywords: MutableSet<Keyword>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +46,6 @@ class EditKeywordBottomSheetDialogFragment(private val target: AppAndKeywords, p
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentEditKeywordBinding.inflate(inflater, container, false).apply {
-            app = target.app
             startTime.setIs24HourView(true)
             endTime.setIs24HourView(true)
             keywordInput.requestFocus()
@@ -64,7 +63,15 @@ class EditKeywordBottomSheetDialogFragment(private val target: AppAndKeywords, p
                 }
             }
         }
-        target.keywords.forEach { addChip(it.keyword) }
+        appListViewModel.get(packageName).subscribeOn(Schedulers.io())
+            .subscribe { (app, keywords) ->
+                binding.app = app
+                keywords.forEach { addChip(it.keyword) }
+
+                oldApp = app!!.copy()
+                oldKeywords = keywords
+                newKeywords = keywords.toMutableSet()
+            }
         return binding.root
     }
 
@@ -78,8 +85,6 @@ class EditKeywordBottomSheetDialogFragment(private val target: AppAndKeywords, p
         if (oldApp != newApp || newKeywords != oldKeywords) {
             appListViewModel.update(newApp)
             keywordViewModel.replace(packageName, newKeywords)
-            target.app = newApp
-            target.keywords = newKeywords
         }
         onDestroyCallback()
         _binding = null

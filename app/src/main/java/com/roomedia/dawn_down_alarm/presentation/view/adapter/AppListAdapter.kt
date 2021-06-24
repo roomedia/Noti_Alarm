@@ -81,7 +81,7 @@ class AppListAdapter(private val fragment: AppListFragment) : ListAdapter<AppAnd
     }
 
     fun showBottomSheetDialog(view: View) {
-        EditKeywordBottomSheetDialogFragment(getItem(view.id)) {
+        EditKeywordBottomSheetDialogFragment(view.tag as String) {
             notifyItemChanged(view.id)
         }.show(fragment.childFragmentManager, null)
     }
@@ -94,8 +94,6 @@ class AppListAdapter(private val fragment: AppListFragment) : ListAdapter<AppAnd
             val (app, keywords) = appAndKeywords
             binding.app = app!!
             binding.keywords = keywords
-            binding.root.id = position
-
             binding.root.setOnLongClickListener {
                 val context = binding.root.context
                 val isEnabled = if (app.isEnabled) R.string.disable else R.string.enable

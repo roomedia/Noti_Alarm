@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--suppress CheckTagEmptyBody -->
 <resources>
     <string name="app_name">새벽다운 알람</string>
     <string name="icon_description">앱 아이콘</string>
@@ -33,4 +34,20 @@
     <string name="vibration">진동</string>
     <string name="test">테스트</string>
     <string name="test_notification">테스트 알람\n사용자 설정 확인을 위한 테스트 알람 입니다.</string>
+
+    <string name="next">다음</string>
+    <string name="help_label">도움말</string>
+    <string name="help_title">알람이 작동하지 않나요?</string>
+    <string-array name="help_title">
+        <item>알림 접근 권한 허용</item>
+        <item>애플리케이션 알림 허용</item>
+    </string-array>
+    <string-array name="help_body">
+        <item>\"권한 허용\" 버튼을 누르고\n\"새벽다운 알람\"이 허용됐는지 확인해주세요!</item>
+        <item>\"알림 허용\" 버튼을 누르고\n\원하는 애플리케이션의 "알림 표시"가 체크됐는지 확인해주세요!</item>
+    </string-array>
+    <string-array name="help_button">
+        <item>권한 허용</item>
+        <item>알림 허용</item>
+    </string-array>
 </resources>

@@ -12,6 +12,12 @@
         tools:layout="@layout/fragment_list" />
 
     <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.roomedia.dawn_down_alarm.presentation.view.fragment.HelpFragment"
+        android:label="@string/help_label"
+        tools:layout="@layout/fragment_help" />
+
+    <fragment
         android:id="@+id/settingsFragment"
         android:name="com.roomedia.dawn_down_alarm.presentation.view.fragment.SettingsFragment"
         android:label="@string/settings"

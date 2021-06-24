@@ -13,8 +13,8 @@ android {
         applicationId "com.roo_media_.noti_alarm"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 3
-        versionName "1.3"
+        versionCode 4
+        versionName "1.41"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
